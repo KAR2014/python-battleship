@@ -611,6 +611,7 @@ class _Player(object):
                     return
         
         os.system("clear")
+        
 """Menu"""
 def menu():
     oportunidad = 0
