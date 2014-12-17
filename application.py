@@ -6,8 +6,6 @@ import sys
 import time
 
 #Librerias del reproductor
-from pygame import time as pytime  
-from pygame.locals import* 
 import pygame.mixer
 pygame.mixer.init(44100, -16, 2, 4096)
 epica = pygame.mixer.Sound("epica.wav")     # Dura 9 segundos
@@ -18,7 +16,7 @@ epica.play(loops=2, maxtime=0, fade_ms=0)
 class _Player(object):
 
     """ Metodo de Iniciación"""
-    def __init__(self): 
+    def __init__(self):
         self.tablero = []
         self.board = []
         self.armar_tablero_1()
@@ -28,38 +26,37 @@ class _Player(object):
         self.opcion_pos()
 
     """ Armamos Tablero 1 """
-    def armar_tablero_1(self): 
+    def armar_tablero_1(self):
         for x in range(0, 10):
             self.tablero.append(10 * ['♒'])
         #print tablero
 
     """ Armamos Tablero en Blanco """
-    def armar_tablero_2(self): 
+    def armar_tablero_2(self):
         for x in range(0, 10):
             self.board.append(10 * ['♒'])
         #print board
 
     """ Imprimimos Tablero 1 """
-    def print_tablero(self): 
+    def print_tablero(self):
         for i in self.tablero:
             print "  ".join(i)
-    
     """ Imprimimos Tablero en Blanco """
     def print_board(self):
         for i in self.board:
             print "  ".join(i)
 
     """ Definiremos posición Horizontal o Vertical (1/2) """
-    def opcion_pos(self): 
-      return random.randint(1,2)
+    def opcion_pos(self):
+        return random.randint(1, 2)
 
     """ Fila Aleatoria """
-    def fila_aleatoria(self): 
-      return random.randint(0,len(self.tablero)-1)
+    def fila_aleatoria(self):
+        return random.randint(0, len(self.tablero)-1)
 
     """ Columna Aleatoria """
     def columna_aleatoria(self):
-      return random.randint(0,len(self.tablero[0])-1)
+        return random.randint(0, len(self.tablero[0])-1)
 
     """Validacion Posicion Horizontal"""
     def validar_horizontal(self, barco_fila, barco_col, contador):
@@ -67,14 +64,14 @@ class _Player(object):
         barco_col = barco_col
         contador = contador
         cont_barcos = 0
-        for i in range (0,contador):
+        for i in range(0, contador):
             #print  "Contador: " + str(i)
             if self.tablero[barco_fila + i][barco_col] == "⚓":
                 #print False
                 cont_barcos += 1
             else:
                 #print True
-                cont_barcos += 0  
+                cont_barcos += 0
 
         if cont_barcos == 0:
             barco_fila = 0
@@ -91,7 +88,7 @@ class _Player(object):
         barco_col = barco_col
         contador = contador
         cont_barcos = 0
-        for i in range (0,contador):
+        for i in range(0, contador):
             #print  "Contador: " + str(i)
             if self.tablero[barco_fila][barco_col + i] == "⚓":
                 #print False
@@ -109,12 +106,12 @@ class _Player(object):
             barco_col = 0
             return 2
 
-    """Posicionando Barcos"""
+    '''Posicionando Barcos'''
     def colocar_barcos(self):
         self.sonido = pygame.mixer.Sound("pirata.wav")     # Declaramos Sonido del Juego
         print "Reproduciendo ..."
         self.sonido.play(loops=4, maxtime=0, fade_ms=0)
-        print 
+        print
         print " ☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠ "
         print " ☠☠☠☠                  BattleShip Tablero                 ☠☠☠☠ "
         print " ☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠ \n\n"
@@ -123,7 +120,6 @@ class _Player(object):
         print " ☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠ "
         print " ☠☠☠☠             BattleShip Colocando Barcos             ☠☠☠☠ "
         print " ☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠ \n\n"
-        op_barco = 0
         kar1 = 0
         kar2 = 0
         kar3 = 0
@@ -131,167 +127,166 @@ class _Player(object):
         kar5 = 0
         self.validar_h = 0
         self.validar_v = 0
-        self.contador = 5
+        self.barco = 5
         print "\n                    ☠☠☠☠☠☠ 5. Remolcadores ☠☠☠☠☠☠"
-   
 
         #Barcos de 5
         while kar5 < 2:
-            self.barco_fila = self.fila_aleatoria()
-            self.barco_col = self.columna_aleatoria()
-            #print "FILA: " + str(self.barco_fila)
-            #print "COLUMNA: " + str(self.barco_col) 
+            self.bar_fil = self.fila_aleatoria()
+            self.bar_col = self.columna_aleatoria()
+            #print "FILA: " + str(self.bar_fil)
+            #print "COLUMNA: " + str(self.bar_col)
             self.opcion = self.opcion_pos()
             #print "Posición: "+ str(self.opcion)
             time.sleep(1)
             if self.opcion == 1:
-                if self.barco_fila <= 5 and self.barco_col <= 9:
-                    self.validar_h = self.validar_horizontal(self.barco_fila, self.barco_col, self.contador)
+                if self.bar_fil <= 5 and self.bar_col <= 9:
+                    self.validar_h = self.validar_horizontal(self.bar_fil, self.bar_col, self.barco)
                     if self.validar_h == 1:
-                        #print "FILA: " + str(self.barco_fila)
-                        #print "COLUMNA: " + str(self.barco_col)   
+                        #print "FILA: " + str(self.bar_fil)
+                        #print "COLUMNA: " + str(self.bar_col)
                         print "Remolcador #"+ str(kar5 + 1) + " Colocado"
-                        for i in range (0,5):
-                            self.tablero[self.barco_fila + i][self.barco_col] = "⚓"
+                        for i in range(0, 5):
+                            self.tablero[self.bar_fil + i][self.bar_col] = "⚓"
                         kar5 += 1
                         #raw_input("Presione Enter para Continuar ...")
                     elif self.validar_h == 2:
-                        #print "FILA: " + str(self.barco_fila)
-                        #print "COLUMNA: " + str(self.barco_col)
+                        #print "FILA: " + str(self.bar_fil)
+                        #print "COLUMNA: " + str(self.bar_col)
                         print "Lo Sentimos Hay un Barco en esa Posición"
                         print "Restableciedo Coordenadas Espere ... ⌛"
-                        self.barco_fila = self.fila_aleatoria()
-                        self.barco_col = self.columna_aleatoria()
+                        self.bar_fil = self.fila_aleatoria()
+                        self.bar_col = self.columna_aleatoria()
                         time.sleep(1)
                         os.system("clear")
                     #opcion = 0
-                elif self.barco_fila > 5:
-                    #print "FILA: " + str(self.barco_fila)
-                    #print "COLUMNA: " + str(self.barco_col)
+                elif self.bar_fil > 5:
+                    #print "FILA: " + str(self.bar_fil)
+                    #print "COLUMNA: " + str(self.bar_col)
                     print "El barco no esta en el Oceano"
                     print "Restableciedo Coordenadas Espere ... ⌛"
-                    self.barco_fila = self.fila_aleatoria()
-                    self.barco_col = self.columna_aleatoria()
+                    self.bar_fil = self.fila_aleatoria()
+                    self.bar_col = self.columna_aleatoria()
                     time.sleep(1)
                     os.system("clear")
             elif self.opcion == 2:
-                if self.barco_col <= 5 and self.barco_fila <= 9:
-                    self.validar_v = self.validar_vertical(self.barco_fila, self.barco_col, self.contador)
+                if self.bar_col <= 5 and self.bar_fil <= 9:
+                    self.validar_v = self.validar_vertical(self.bar_fil, self.bar_col, self.barco)
                     if self.validar_v == 1:
-                        #print "FILA: " + str(self.barco_fila)
-                        #print "COLUMNA: " + str(self.barco_col)
+                        #print "FILA: " + str(self.bar_fil)
+                        #print "COLUMNA: " + str(self.bar_col)
                         print "Remolcador #"+ str(kar5 + 1) + " Colocado"
-                        for i in range (0,5):
-                            self.tablero[self.barco_fila][self.barco_col+i] = "⚓"
+                        for i in range(0, 5):
+                            self.tablero[self.bar_fil][self.bar_col+i] = "⚓"
                         kar5 += 1
                         #raw_input("Presione Enter para Continuar ...")
                     elif self.validar_v == 2:
-                        #print "FILA: " + str(self.barco_fila)
-                        #print "COLUMNA: " + str(self.barco_col)
+                        #print "FILA: " + str(self.bar_fil)
+                        #print "COLUMNA: " + str(self.bar_col)
                         print "Lo Sentimos Hay un Barco en esa Posición"
                         print "Restableciedo Coordenadas Espere ... ⌛"
-                        self.barco_fila = self.fila_aleatoria()
-                        self.barco_col = self.columna_aleatoria()
+                        self.bar_fil = self.fila_aleatoria()
+                        self.bar_col = self.columna_aleatoria()
                         time.sleep(1)
                         os.system("clear")
                     #opcion = 0
-                elif self.barco_col > 5:
-                    #print "FILA: " + str(self.barco_fila)
-                    #print "COLUMNA: " + str(self.barco_col)
+                elif self.bar_col > 5:
+                    #print "FILA: " + str(self.bar_fil)
+                    #print "COLUMNA: " + str(self.bar_col)
                     print "El barco no esta en el Oceano"
                     print "Restableciedo Coordenadas Espere ... ⌛"
-                    self.barco_fila = self.fila_aleatoria()
-                    self.barco_col = self.columna_aleatoria()
+                    self.bar_fil = self.fila_aleatoria()
+                    self.bar_col = self.columna_aleatoria()
                     time.sleep(1)
                     os.system("clear")
         print " ☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠ "
         print " ☠☠☠☠              5. Remolcadores Colocados              ☠☠☠☠ "
         print " ☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠ \n\n"
         #self.print_tablero()
-        self.barco_fila = 0
-        self.barco_col = 0
+        self.bar_fil = 0
+        self.bar_col = 0
         self.opcion = 0
-        self.contador = 4
+        self.barco = 4
         time.sleep(1)
 
         print "\n                    ☠☠☠☠☠☠ 4. Destructores ☠☠☠☠☠☠"
         #Barcos de 4
         while kar4 < 1:
-            self.barco_fila = self.fila_aleatoria()
-            self.barco_col = self.columna_aleatoria()
-            #print "FILA: " + str(self.barco_fila)
-            #print "COLUMNA: " + str(self.barco_col) 
+            self.bar_fil = self.fila_aleatoria()
+            self.bar_col = self.columna_aleatoria()
+            #print "FILA: " + str(self.bar_fil)
+            #print "COLUMNA: " + str(self.bar_col)
             self.opcion = self.opcion_pos()
             #print "Posición: "+ str(self.opcion)
             time.sleep(1)
             if self.opcion == 1:
-                if self.barco_fila <= 6 and self.barco_col <= 9:
-                    self.validar_h = self.validar_horizontal(self.barco_fila, self.barco_col, self.contador)
+                if self.bar_fil <= 6 and self.bar_col <= 9:
+                    self.validar_h = self.validar_horizontal(self.bar_fil, self.bar_col, self.barco)
                     if self.validar_h == 1:
-                        #print "FILA: " + str(self.barco_fila)
-                        #print "COLUMNA: " + str(self.barco_col)   
+                        #print "FILA: " + str(self.bar_fil)
+                        #print "COLUMNA: " + str(self.bar_col)
                         print "Destructor # "+ str(kar4 + 1) + " Colocado"
-                        for i in range (0,4):
-                            self.tablero[self.barco_fila + i][self.barco_col] = "⚓"
+                        for i in range(0, 4):
+                            self.tablero[self.bar_fil + i][self.bar_col] = "⚓"
                         kar4 += 1
                         #raw_input("Presione Enter para Continuar ...")
                     elif self.validar_h == 2:
-                        #print "FILA: " + str(self.barco_fila)
-                        #print "COLUMNA: " + str(self.barco_col)
+                        #print "FILA: " + str(self.bar_fil)
+                        #print "COLUMNA: " + str(self.bar_col)
                         print "Lo Sentimos Hay un Barco en esa Posición"
                         print "Restableciedo Coordenadas Espere ... ⌛"
-                        self.barco_fila = self.fila_aleatoria()
-                        self.barco_col = self.columna_aleatoria()
+                        self.bar_fil = self.fila_aleatoria()
+                        self.bar_col = self.columna_aleatoria()
                         time.sleep(1)
                         os.system("clear")
                     #opcion = 0
-                elif self.barco_fila > 6:
-                    #print "FILA: " + str(self.barco_fila)
-                    #print "COLUMNA: " + str(self.barco_col)
+                elif self.bar_fil > 6:
+                    #print "FILA: " + str(self.bar_fil)
+                    #print "COLUMNA: " + str(self.bar_col)
                     print "El barco no esta en el Oceano"
                     print "Restableciedo Coordenadas Espere ... ⌛"
-                    self.barco_fila = self.fila_aleatoria()
-                    self.barco_col = self.columna_aleatoria()
+                    self.bar_fil = self.fila_aleatoria()
+                    self.bar_col = self.columna_aleatoria()
                     time.sleep(1)
                     os.system("clear")
             elif self.opcion == 2:
-                if self.barco_col <= 6 and self.barco_fila <= 9:
-                    self.validar_v = self.validar_vertical(self.barco_fila, self.barco_col, self.contador)
+                if self.bar_col <= 6 and self.bar_fil <= 9:
+                    self.validar_v = self.validar_vertical(self.bar_fil, self.bar_col, self.barco)
                     if self.validar_v == 1:
-                        #print "FILA: " + str(self.barco_fila)
-                        #print "COLUMNA: " + str(self.barco_col)
+                        #print "FILA: " + str(self.bar_fil)
+                        #print "COLUMNA: " + str(self.bar_col)
                         print "Destructor #"+ str(kar4 + 1) +" Colocado"
-                        for i in range (0,4):
-                            self.tablero[self.barco_fila][self.barco_col+i] = "⚓"
+                        for i in range(0, 4):
+                            self.tablero[self.bar_fil][self.bar_col+i] = "⚓"
                         kar4 += 1
                         #raw_input("Presione Enter para Continuar ...")
                     elif self.validar_v == 2:
-                        #print "FILA: " + str(self.barco_fila)
-                        #print "COLUMNA: " + str(self.barco_col)
+                        #print "FILA: " + str(self.bar_fil)
+                        #print "COLUMNA: " + str(self.bar_col)
                         print "Lo Sentimos Hay un Barco en esa Posición"
                         print "Restableciedo Coordenadas Espere ... ⌛"
-                        self.barco_fila = self.fila_aleatoria()
-                        self.barco_col = self.columna_aleatoria()
+                        self.bar_fil = self.fila_aleatoria()
+                        self.bar_col = self.columna_aleatoria()
                         time.sleep(1)
                         os.system("clear")
                     #opcion = 0
-                elif self.barco_col > 6:
-                    #print "FILA: " + str(self.barco_fila)
-                    #print "COLUMNA: " + str(self.barco_col)
+                elif self.bar_col > 6:
+                    #print "FILA: " + str(self.bar_fil)
+                    #print "COLUMNA: " + str(self.bar_col)
                     print "El barco no esta en el Oceano"
                     print "Restableciedo Coordenadas Espere ... ⌛"
-                    self.barco_fila = self.fila_aleatoria()
-                    self.barco_col = self.columna_aleatoria()
+                    self.bar_fil = self.fila_aleatoria()
+                    self.bar_col = self.columna_aleatoria()
                     time.sleep(1)
                     os.system("clear")
         print " ☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠ "
         print " ☠☠☠☠              4. Destructores Colocados              ☠☠☠☠ "
         print " ☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠ \n\n"
         #self.print_tablero()
-        self.barco_fila = 0
-        self.barco_col = 0
+        self.bar_fil = 0
+        self.bar_col = 0
         self.opcion = 0
-        self.contador = 3
+        self.barco = 3
         time.sleep(1)
 
 
@@ -299,162 +294,162 @@ class _Player(object):
 
         #Barcos de 3
         while kar3 < 1:
-            self.barco_fila = self.fila_aleatoria()
-            self.barco_col = self.columna_aleatoria()
-            #print "FILA: " + str(self.barco_fila)
-            #print "COLUMNA: " + str(self.barco_col) 
+            self.bar_fil = self.fila_aleatoria()
+            self.bar_col = self.columna_aleatoria()
+            #print "FILA: " + str(self.bar_fil)
+            #print "COLUMNA: " + str(self.bar_col)
             self.opcion = self.opcion_pos()
             #print "Posición: "+ str(self.opcion)
             time.sleep(1)
             if self.opcion == 1:
-                if self.barco_fila <= 7 and self.barco_col <= 9:
-                    self.validar_h = self.validar_horizontal(self.barco_fila, self.barco_col, self.contador)
+                if self.bar_fil <= 7 and self.bar_col <= 9:
+                    self.validar_h = self.validar_horizontal(self.bar_fil, self.bar_col, self.barco)
                     if self.validar_h == 1:
-                        #print "FILA: " + str(self.barco_fila)
-                        #print "COLUMNA: " + str(self.barco_col)   
+                        #print "FILA: " + str(self.bar_fil)
+                        #print "COLUMNA: " + str(self.bar_col)
                         print "Fragata #"+ str(kar3 + 1) +" Colocado"
-                        for i in range (0,3):
-                            self.tablero[self.barco_fila + i][self.barco_col] = "⚓"
+                        for i in range(0, 3):
+                            self.tablero[self.bar_fil + i][self.bar_col] = "⚓"
                         kar3 += 1
                         #raw_input("Presione Enter para Continuar ...")
                     elif self.validar_h == 2:
-                        #print "FILA: " + str(self.barco_fila)
-                        #print "COLUMNA: " + str(self.barco_col)
+                        #print "FILA: " + str(self.bar_fil)
+                        #print "COLUMNA: " + str(self.bar_col)
                         print "Lo Sentimos Hay un Barco en esa Posición"
                         print "Restableciedo Coordenadas Espere ... ⌛"
-                        self.barco_fila = self.fila_aleatoria()
-                        self.barco_col = self.columna_aleatoria()
+                        self.bar_fil = self.fila_aleatoria()
+                        self.bar_col = self.columna_aleatoria()
                         time.sleep(1)
                         os.system("clear")
                     #opcion = 0
-                elif self.barco_fila > 7 :
-                    #print "FILA: " + str(self.barco_fila)
-                    #print "COLUMNA: " + str(self.barco_col)
+                elif self.bar_fil > 7:
+                    #print "FILA: " + str(self.bar_fil)
+                    #print "COLUMNA: " + str(self.bar_col)
                     print "El barco no esta en el Oceano"
                     print "Restableciedo Coordenadas Espere ... ⌛"
-                    self.barco_fila = self.fila_aleatoria()
-                    self.barco_col = self.columna_aleatoria()
+                    self.bar_fil = self.fila_aleatoria()
+                    self.bar_col = self.columna_aleatoria()
                     time.sleep(1)
                     os.system("clear")
             elif self.opcion == 2:
-                if self.barco_col <= 7 and self.barco_fila <= 9:
-                    self.validar_v = self.validar_vertical(self.barco_fila, self.barco_col, self.contador)
+                if self.bar_col <= 7 and self.bar_fil <= 9:
+                    self.validar_v = self.validar_vertical(self.bar_fil, self.bar_col, self.barco)
                     if self.validar_v == 1:
-                        #print "FILA: " + str(self.barco_fila)
-                        #print "COLUMNA: " + str(self.barco_col)
+                        #print "FILA: " + str(self.bar_fil)
+                        #print "COLUMNA: " + str(self.bar_col)
                         print "Fragata #"+ str(kar3 + 1) + " Colocado"
-                        for i in range (0,3):
-                            self.tablero[self.barco_fila][self.barco_col+i] = "⚓"
+                        for i in range(0, 3):
+                            self.tablero[self.bar_fil][self.bar_col+i] = "⚓"
                         kar3 += 1
                         #raw_input("Presione Enter para Continuar ...")
                     elif self.validar_v == False:
-                        #print "FILA: " + str(self.barco_fila)
-                        #print "COLUMNA: " + str(self.barco_col)
+                        #print "FILA: " + str(self.bar_fil)
+                        #print "COLUMNA: " + str(self.bar_col)
                         print "Lo Sentimos Hay un Barco en esa Posición"
                         print "Restableciedo Coordenadas Espere ... ⌛"
-                        self.barco_fila = self.fila_aleatoria()
-                        self.barco_col = self.columna_aleatoria()
+                        self.bar_fil = self.fila_aleatoria()
+                        self.bar_col = self.columna_aleatoria()
                         time.sleep(1)
                         os.system("clear")
                     #opcion = 0
-                elif self.barco_col > 7:
-                    #print "FILA: " + str(self.barco_fila)
-                    #print "COLUMNA: " + str(self.barco_col)
+                elif self.bar_col > 7:
+                    #print "FILA: " + str(self.bar_fil)
+                    #print "COLUMNA: " + str(self.bar_col)
                     print "El barco no esta en el Oceano"
                     print "Restableciedo Coordenadas Espere ... ⌛"
-                    self.barco_fila = self.fila_aleatoria()
-                    self.barco_col = self.columna_aleatoria()
+                    self.bar_fil = self.fila_aleatoria()
+                    self.bar_col = self.columna_aleatoria()
                     time.sleep(1)
                     os.system("clear")
         print " ☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠ "
         print " ☠☠☠☠                3. Fragatas Colocados                ☠☠☠☠ "
         print " ☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠ \n\n"
         #self.print_tablero()
-        self.barco_fila = 0
-        self.barco_col = 0
+        self.bar_fil = 0
+        self.bar_col = 0
         self.opcion = 0
-        self.contador = 2
+        self.barco = 2
         time.sleep(1)
 
         print "\n                    ☠☠☠☠☠☠ 2. Patrulleros ☠☠☠☠☠☠"
 
         #Barcos de 2
         while kar2 < 2:
-            self.barco_fila = self.fila_aleatoria()
-            self.barco_col = self.columna_aleatoria()
-            #print "FILA: " + str(self.barco_fila)
-            #print "COLUMNA: " + str(self.barco_col) 
+            self.bar_fil = self.fila_aleatoria()
+            self.bar_col = self.columna_aleatoria()
+            #print "FILA: " + str(self.bar_fil)
+            #print "COLUMNA: " + str(self.bar_col)
             self.opcion = self.opcion_pos()
             #print "Posición: "+ str(self.opcion)
             time.sleep(1)
             if self.opcion == 1:
-                if self.barco_fila <= 8 and self.barco_col <= 9:
-                    self.validar_h = self.validar_horizontal(self.barco_fila, self.barco_col, self.contador)
+                if self.bar_fil <= 8 and self.bar_col <= 9:
+                    self.validar_h = self.validar_horizontal(self.bar_fil, self.bar_col, self.barco)
                     if self.validar_h == 1:
-                        #print "FILA: " + str(self.barco_fila)
-                        #print "COLUMNA: " + str(self.barco_col)   
+                        #print "FILA: " + str(self.bar_fil)
+                        #print "COLUMNA: " + str(self.bar_col)
                         print "Patrullero #"+ str(kar2 + 1) + " Colocado"
-                        for i in range (0,2):
-                            self.tablero[self.barco_fila + i][self.barco_col] = "⚓"
+                        for i in range(0, 2):
+                            self.tablero[self.bar_fil + i][self.bar_col] = "⚓"
                         kar2 += 1
                         #raw_input("Presione Enter para Continuar ...")
                     elif self.validar_h == 2:
-                        #print "FILA: " + str(self.barco_fila)
-                        #print "COLUMNA: " + str(self.barco_col)
+                        #print "FILA: " + str(self.bar_fil)
+                        #print "COLUMNA: " + str(self.bar_col)
                         print "Lo Sentimos Hay un Barco en esa Posición"
                         print "Restableciedo Coordenadas Espere ... ⌛"
-                        self.barco_fila = self.fila_aleatoria()
-                        self.barco_col = self.columna_aleatoria()
+                        self.bar_fil = self.fila_aleatoria()
+                        self.bar_col = self.columna_aleatoria()
                         time.sleep(1)
                         os.system("clear")
                     #opcion = 0
-                elif self.barco_fila > 8:
-                    #print "FILA: " + str(self.barco_fila)
-                    #print "COLUMNA: " + str(self.barco_col)
+                elif self.bar_fil > 8:
+                    #print "FILA: " + str(self.bar_fil)
+                    #print "COLUMNA: " + str(self.bar_col)
                     print "El barco no esta en el Oceano"
                     print "Restableciedo Coordenadas Espere ... ⌛"
-                    self.barco_fila = self.fila_aleatoria()
-                    self.barco_col = self.columna_aleatoria()
+                    self.bar_fil = self.fila_aleatoria()
+                    self.bar_col = self.columna_aleatoria()
                     time.sleep(1)
                     os.system("clear")
             elif self.opcion == 2:
-                if self.barco_col <= 8 and self.barco_fila <= 9:
-                    self.validar_v = self.validar_vertical(self.barco_fila, self.barco_col, self.contador)
+                if self.bar_col <= 8 and self.bar_fil <= 9:
+                    self.validar_v = self.validar_vertical(self.bar_fil, self.bar_col, self.barco)
                     if self.validar_v == 1:
-                        #print "FILA: " + str(self.barco_fila)
-                        #print "COLUMNA: " + str(self.barco_col)
+                        #print "FILA: " + str(self.bar_fil)
+                        #print "COLUMNA: " + str(self.bar_col)
                         print "Patrullero #"+ str(kar2 + 1) + " Colocado"
-                        for i in range (0,2):
-                            self.tablero[self.barco_fila][self.barco_col+i] = "⚓"
+                        for i in range(0, 2):
+                            self.tablero[self.bar_fil][self.bar_col+i] = "⚓"
                         kar2 += 1
                         #raw_input("Presione Enter para Continuar ...")
                     elif self.validar_v == 2:
-                        #print "FILA: " + str(self.barco_fila)
-                        #print "COLUMNA: " + str(self.barco_col)
+                        #print "FILA: " + str(self.bar_fil)
+                        #print "COLUMNA: " + str(self.bar_col)
                         print "Lo Sentimos Hay un Barco en esa Posición"
                         print "Restableciedo Coordenadas Espere ... ⌛"
-                        self.barco_fila = self.fila_aleatoria()
-                        self.barco_col = self.columna_aleatoria()
+                        self.bar_fil = self.fila_aleatoria()
+                        self.bar_col = self.columna_aleatoria()
                         time.sleep(1)
                         os.system("clear")
                     #opcion = 0
-                elif self.barco_col > 8:
-                    #print "FILA: " + str(self.barco_fila)
-                    #print "COLUMNA: " + str(self.barco_col)
+                elif self.bar_col > 8:
+                    #print "FILA: " + str(self.bar_fil)
+                    #print "COLUMNA: " + str(self.bar_col)
                     print "El barco no esta en el Oceano"
                     print "Restableciedo Coordenadas Espere ... ⌛"
-                    self.barco_fila = self.fila_aleatoria()
-                    self.barco_col = self.columna_aleatoria()
+                    self.bar_fil = self.fila_aleatoria()
+                    self.bar_col = self.columna_aleatoria()
                     time.sleep(1)
                     os.system("clear")
         print " ☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠ "
         print " ☠☠☠☠               2. Patrulleros Colocados              ☠☠☠☠ "
         print " ☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠ \n\n"
         #self.print_tablero()
-        self.barco_fila = 0
-        self.barco_col = 0
+        self.bar_fil = 0
+        self.bar_col = 0
         self.opcion = 0
-        self.contador = 1
+        self.barco = 1
         time.sleep(1)
 
 
@@ -462,38 +457,38 @@ class _Player(object):
 
         #Barcos de 1
         while kar1 < 3:
-            self.barco_fila = self.fila_aleatoria()
-            self.barco_col = self.columna_aleatoria()
-            #print "FILA: " + str(self.barco_fila)
-            #print "COLUMNA: " + str(self.barco_col) 
+            self.bar_fil = self.fila_aleatoria()
+            self.bar_col = self.columna_aleatoria()
+            #print "FILA: " + str(self.bar_fil)
+            #print "COLUMNA: " + str(self.bar_col)
             time.sleep(1)
 
-            self.validar_h = self.validar_horizontal(self.barco_fila, self.barco_col, self.contador)
-            self.validar_v = self.validar_vertical(self.barco_fila, self.barco_col, self.contador)
+            self.validar_h = self.validar_horizontal(self.bar_fil, self.bar_col, self.barco)
+            self.validar_v = self.validar_vertical(self.bar_fil, self.bar_col, self.barco)
             if self.validar_h == 1 and self.validar_v == 1:
-                #print "FILA: " + str(self.barco_fila)
-                #print "COLUMNA: " + str(self.barco_col)   
+                #print "FILA: " + str(self.bar_fil)
+                #print "COLUMNA: " + str(self.bar_col)
                 print "Submarino #"+ str(kar1 + 1) + " Colocado"
-                self.tablero[self.barco_fila][self.barco_col] = "⚓"
+                self.tablero[self.bar_fil][self.bar_col] = "⚓"
                 kar1 += 1
                 #raw_input("Presione Enter para Continuar ...")
             elif self.validar_h == 2 and self.validar_v == 2:
-                #print "FILA: " + str(self.barco_fila)
-                #print "COLUMNA: " + str(self.barco_col)
+                #print "FILA: " + str(self.bar_fil)
+                #print "COLUMNA: " + str(self.bar_col)
                 print "Lo Sentimos Hay un Barco en esa Posición"
                 print "Restableciedo Coordenadas Espere ... ⌛"
-                self.barco_fila = self.fila_aleatoria()
-                self.barco_col = self.columna_aleatoria()
+                self.bar_fil = self.fila_aleatoria()
+                self.bar_col = self.columna_aleatoria()
                 time.sleep(1)
                 os.system("clear")
         print " ☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠ "
         print " ☠☠☠☠                1. Submarinos Colocados              ☠☠☠☠ "
         print " ☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠ \n\n"
         #self.print_tablero()
-        self.barco_fila = 0
-        self.barco_col = 0
+        self.bar_fil = 0
+        self.bar_col = 0
         self.opcion = 0
-        self.contador = 0
+        self.barco = 0
         time.sleep(1)
 
         print
@@ -505,7 +500,7 @@ class _Player(object):
         time.sleep(1)
 
     """Inicia el Single Player"""
-    def start_Single(self):
+    def start_single(self):
         repetir = "si"
         while repetir == "si":
             pygame.mixer.init(44100, -16, 2, 4096)
@@ -514,8 +509,8 @@ class _Player(object):
             os.system("clear")
             score = 0
             repetido = 0
-            adivina_fila = 0
-            adivina_columna = 0
+            adiv_fil = 0
+            adiv_col = 0
             turno = 0
             print " ☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠ "
             print " ☠☠☠☠                  BattleShip: Start Game             ☠☠☠☠ "
@@ -524,16 +519,16 @@ class _Player(object):
             while turno < 5:#¡De aquí en adelante todo debería ir en tu bucle for!
                 #¡Asegúrate de indentar!
                 while True:
-                    print "Turno:" , (turno +1)# ¡Muestra (turno + 1) aquí!
+                    print "Turno:", (turno +1)# ¡Muestra (turno + 1) aquí!
                     print
                     self.print_board()
                     print "\n"
-                    adivina_fila = raw_input("Adivina fila: ")#fila
-                    adivina_columna = raw_input("Adivina columna: ")#Columna
-                    try:    
-                        adivina_fila = int(adivina_fila)
-                        adivina_columna = int(adivina_columna)
-                        if adivina_fila >= 0 and adivina_columna >= 0:
+                    adiv_fil = raw_input("Adivina fila: ")#fila
+                    adiv_col = raw_input("Adivina columna: ")#Columna
+                    try:
+                        adiv_fil = int(adiv_fil)
+                        adiv_col = int(adiv_col)
+                        if adiv_fil >= 0 and adiv_col >= 0:
                             break
                         else:
                             print "Ingrese coordenadas válidas\n"
@@ -544,31 +539,31 @@ class _Player(object):
                         time.sleep(1)
                         os.system("clear")
                 #hundiendo barco
-                if (adivina_fila >= 0 and adivina_fila <= 9) and (adivina_columna >= 0 and adivina_columna <= 9):
-                    if self.tablero[adivina_fila][adivina_columna] == "⚓":
+                if (adiv_fil >= 0 and adiv_fil <= 9) and (adiv_col >= 0 and adiv_col <= 9):
+                    if self.tablero[adiv_fil][adiv_col] == "⚓":
                         print "¡Felicitaciones! ¡Hundiste mi barco!"
-                        score += 10 
+                        score += 10
                         explosion.play()
-                        self.board[adivina_fila][adivina_columna] = "☠"
+                        self.board[adiv_fil][adiv_col] = "☠"
                         self.print_board()
-                        
+
                         #fuera oceano
-                    elif (self.board[adivina_fila][adivina_columna] == "☠" or self.board[adivina_fila][adivina_columna] == "X" or repetido > 0):
+                    elif self.board[adiv_fil][adiv_col] == "☠" or self.board[adiv_fil][adiv_col] == "X" or repetido > 0:
 
                         print "Ya dijiste esa."
                         self.print_board()
                     else:
                         #No impacte el barco
-                        print u"¡No impactaste mi barco!"
-                        self.board[adivina_fila][adivina_columna] = "X"
+                        print "¡No impactaste mi barco!"
+                        self.board[adiv_fil][adiv_col] = "X"
                         self.print_board()
                 else:
                     #tiro repetido
-                    if (adivina_fila < 0 or adivina_fila > 9) or (adivina_columna < 0 or adivina_columna > 9):
-                        repetido += 1 
-                        print u"Vaya, esto ni siquiera está en el océano."
-                        self.print_board()    
-                turno += 1         
+                    if (adiv_fil < 0 or adiv_fil > 9) or (adiv_col < 0 or adiv_col > 9):
+                        repetido += 1
+                        print "Vaya, esto ni siquiera está en el océano."
+                        self.print_board()
+                turno += 1
                 #contador de turnos
                 if turno == 5:
                     print "Terminó el juego"
@@ -604,15 +599,15 @@ class _Player(object):
                     time.sleep(1)
                     os.system("clear")
                     new_game = _Player()
-                    new_game.start_Single()
+                    new_game.start_single()
                 elif repetir == "no":
                     self.sonido.stop()
                     break
-                    return
-        
+                break
+            break
         os.system("clear")
-        
-"""Menu"""
+
+"""Funcion del Menu"""
 def menu():
     oportunidad = 0
     while True:
@@ -647,7 +642,7 @@ def menu():
             print "Bienvenido a Single Player"
             os.system("clear")
             batalla = _Player()
-            batalla.start_Single()
+            batalla.start_single()
             epica.play()
 
         if oportunidad == 3:
