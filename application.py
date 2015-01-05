@@ -1841,7 +1841,7 @@ class _Mplayer(object):
         """Inicia el Multi_Player"""
         self.batalla.play(loops=5, maxtime=0, fade_ms=0)
         score = 0
-        oportunidad = 2
+        oportunidad = 10
         cont_j1 = 0
         cont_j2 = 0
         puntaje_j1 = 0
