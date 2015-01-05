@@ -5,29 +5,27 @@ import os
 import sys
 import time
 
-Librerias del reproductor
+#Librerias del reproductor
 import pygame.mixer
 pygame.mixer.init(44100, -16, 2, 4096)
-epica = pygame.mixer.Sound("epica.wav")   # inicializo el sonido de los menus - EPICA
-pixer = pygame.mixer.Sound("inss.wav")
-premios = {}
-prueba = {}
+EPICA = pygame.mixer.Sound("epica.wav")   # inicializo el sonido de los menus - EPICA
+PIXER = pygame.mixer.Sound("inss.wav")
 
-################################################################################################################################################################################################
-#########################################################################               Clase Single_player            #########################################################################
-################################################################################################################################################################################################
+##############################################################
+##############        Clase Single_player      ###############
+##############################################################
 
 class _Player(object):
     """Clase de Single Player"""
 
     def __init__(self):
         """ Iniciamos Variables Globales """
-        self.sonido = pygame.mixer.Sound("pirata.wav")  #inicializo el sonido del Single Player - PIRATA
-        explosion = pygame.mixer.Sound("ex.wav") #se declara el sonido de explosion del single - EX
-        self.epica = pygame.mixer.Sound("epica.wav")
-        self.pixer = pygame.mixer.Sound("inss.wav")
-        self.medallas = { }
-        self.puntos = { }
+        self.sonido = pygame.mixer.Sound("pirata.wav") #inicializo el sonido - PIRATA
+        self.explosion = pygame.mixer.Sound("ex.wav") #inicializo el sonido - EX
+        self.epica = pygame.mixer.Sound("epica.wav") #inicializo el sonido - EPICA
+        self.pixer = pygame.mixer.Sound("inss.wav") #inicializo el sonido - INSS
+        self.medallas = {}
+        self.puntos = {}
         self.tablero = []
         self.board = []
 
@@ -35,36 +33,37 @@ class _Player(object):
         self.armar_tableros()
 
     def limpiar(self):
+        """ Limpiar """
         self.tablero = []
         self.board = []
 
 
     def armar_tableros(self):
         """ Armamos Tablero 1 """
-        for tablero in range(0, 10):
+        for _ in range(0, 10):
             self.tablero.append(10 * ['♒'])
 
-        for board in range(0, 10):
+        for _ in range(0, 10):
             self.board.append(10 * ['♒'])
 
     def print_tablero(self):
         """ Imprimimos Tablero 1 """
-        print "    0  |  1  |  2  |  3  |  4  |  5  |  6  |  7  |  8  |  9  |"
-        print "    - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  \n"
+        print "   |  0  |  1  |  2  |  3  |  4  |  5  |  6  |  7  |  8  |  9  |"
+        print "   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  \n"
         cont = 0
         for i in self.tablero:
-            print str(cont) +  " | "+" |  ".join(i)
-            print "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n"
+            print str(cont) + "  |  " + "  |  ".join(i) + "  |"
+            print "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n"
             cont += 1
 
     def print_board(self):
         """ Imprimimos Tablero en Blanco """
-        print "    0  |  1  |  2  |  3  |  4  |  5  |  6  |  7  |  8  |  9  |"
-        print "    - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  \n"
+        print "   |  0  |  1  |  2  |  3  |  4  |  5  |  6  |  7  |  8  |  9  |"
+        print "   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  \n"
         cont = 0
         for i in self.board:
-            print str(cont) + "  | "+" |  ".join(i)
-            print "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n"
+            print str(cont) + "  |  " + "  |  ".join(i) + "  |"
+            print "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -\n"
             cont += 1
 
     def opcion_pos(self):
@@ -124,7 +123,6 @@ class _Player(object):
 
     def colocar_barcos(self, ship5, ship4, ship3, ship2, ship1, bomba):
         '''Posicionando Barcos'''    # Declaramos Sonido del Juego
-        #self.sonido.play(loops=4, maxtime=0, fade_ms=0)
         print
         print " ☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠ "
         print " ☠☠☠☠               BattleShip Single Player              ☠☠☠☠ "
@@ -196,7 +194,7 @@ class _Player(object):
         bar_col = 0
         opcion = 0
         barco = 4
-        no_barcos = 0 
+        no_barcos = 0
         time.sleep(1)
 
 
@@ -467,8 +465,6 @@ class _Player(object):
         os.system("clear")
         score = 0
         decremento = oportunidad
-        respuesta = 0
-        repetido = 0
         asierto1 = 0
         asierto2 = 0
         adiv_fil = 0
@@ -501,10 +497,11 @@ class _Player(object):
                 except(RuntimeError, TypeError, NameError, ValueError):
                     print "Ingrese coordenadas válidas\n"
                     time.sleep(1)
-                    os.system("clear")
+                    os.system("reset")
             if (adiv_fil >= 0 and adiv_fil <= 9) and (adiv_col >= 0 and adiv_col <= 9):
-                #fuera oceano
-                if (self.board[adiv_fil][adiv_col] == "☠" and asierto1 > 0) or (self.board[adiv_fil][adiv_col] == "X" and asierto2 > 0) :
+                #Tiro Repetido
+                if (self.board[adiv_fil][adiv_col] == "☠" and asierto1 > 0) or \
+                    (self.board[adiv_fil][adiv_col] == "X" and asierto2 > 0):
                     print "Ya dijiste esa."
                     self.print_board()
 
@@ -513,7 +510,7 @@ class _Player(object):
                     print "¡Felicitaciones! ¡Hundiste mi barco!"
                     score += 10 #Contador de puntaje
                     asierto1 += 1
-                    #explosion.play()
+                    self.explosion.play()
                     self.board[adiv_fil][adiv_col] = "☠"
                     self.print_board()
                 elif self.tablero[adiv_fil][adiv_col] == "*":
@@ -526,20 +523,22 @@ class _Player(object):
                     print "¡No impactaste mi barco!"
                     self.board[adiv_fil][adiv_col] = "X"
                     self.print_board()
-                    asierto2 +=1
-                #Tiro Repetido    
-            if (adiv_fil < 0 or adiv_fil > 9) or (adiv_col < 0 or adiv_col > 9):
-                    print "Vaya, esto ni siquiera está en el océano."
-                    asierto1 += 1
                     asierto2 += 1
-                    self.print_board()
+            #fuera oceano
+            if (adiv_fil < 0 or adiv_fil > 9) or (adiv_col < 0 or adiv_col > 9):
+                print "Vaya, esto ni siquiera está en el océano."
+                asierto1 += 1
+                asierto2 += 1
+                self.print_board()
+
             turno += 1 #contador de turnos
-            print "Turnos Restantes: "+ str(decremento - 1)
-            print "puntos al momento: "+ str(score)
             decremento -= 1
-            time.sleep(1)
+            print "Turnos Restantes: "+ str(decremento)
+            print "puntos al momento: "+ str(score)
+
+            time.sleep(2)
             os.system("clear")
-            
+
             if turno == oportunidad:
                 print "Terminó el juego"
                 time.sleep(1)
@@ -551,23 +550,23 @@ class _Player(object):
         if level == 1:
             os.system("clear")
             self.medallas[nombre] = "Cabo"
-            self.puntos [nombre] = score
+            self.puntos[nombre] = score
 
         if level == 2:
             self.medallas[nombre] = "Sargento"
-            self.puntos [nombre] = score
+            self.puntos[nombre] = score
 
         if level == 3:
             self.medallas[nombre] = "Teniente"
-            self.puntos [nombre] = score
+            self.puntos[nombre] = score
 
         if level == 4:
             self.medallas[nombre] = "Capitán"
-            self.puntos [nombre] = score
+            self.puntos[nombre] = score
 
         if level == 5:
             self.medallas[nombre] = "Mayor"
-            self.puntos [nombre] = score
+            self.puntos[nombre] = score
             game_over = 1
 
         print "   *******   Battleship ****** Detalles de la Misión ***** "
@@ -576,6 +575,7 @@ class _Player(object):
         print "Puntos: "+ str(self.puntos[nombre])
         print "Rango Naval: "+ str(self.medallas[nombre]) + "\n"
         raw_input("Presione Enter para tu siguiente misión... ")
+        os.system("reset")
 
         if game_over == 1:
             print "¡Felicitaciones Mayor! Bien Jugado "
@@ -590,7 +590,7 @@ class _Player(object):
             print """
                         Battleship * Misión 1:
 
-            Muy bien """+ nombre + """ desidiste entrar en 
+            Muy bien """+ nombre + """ desidiste entrar en
             en la marina veremos si eres digno de estar aquí.
 
 
@@ -600,9 +600,9 @@ class _Player(object):
             ja ja ja ja...
 
             ¡ Suerte Novato !
-            """ 
+            """
             raw_input("Presione enter para continuar... ")
-            os.system("clear")
+            os.system("reset")
 
         if mision == 2: # MISION 2
             print """        Battleship * Misión 2:
@@ -620,7 +620,7 @@ class _Player(object):
 
             """
             raw_input("Presione enter para continuar... ")
-            os.system("clear")
+            os.system("reset")
 
         if mision == 3: # MISION 3
             print """        Battleship * Misión 3:
@@ -639,7 +639,7 @@ class _Player(object):
 
             """
             raw_input("Presione enter para continuar... ")
-            os.system("clear")
+            os.system("reset")
 
         if mision == 4:# MISION 4
             print """        Battleship * Misión 4:
@@ -659,7 +659,7 @@ class _Player(object):
 
             """
             raw_input("Presione enter para continuar... ")
-            os.system("clear")
+            os.system("reset")
 
         if mision == 5: # MISION 5
             print """        Battleship * Misión 5:
@@ -687,10 +687,11 @@ class _Player(object):
 
             """
             raw_input("Presione enter para continuar... ")
-            os.system("clear")
+            os.system("reset")
 
     def niveles(self):
         """Metodo nuevo de nivles para el single player"""
+        self.sonido.play(loops=5, maxtime=0, fade_ms=0)
         self.limpiar()
         self.armar_tableros()
         nombre = ""
@@ -709,18 +710,18 @@ class _Player(object):
                 nombre = int(nombre)
                 print u"Debe ingresar un nombre válido\n"
             except(RuntimeError, NameError, ValueError):
-                if (len(nombre) <= 2):
+                if len(nombre) <= 2:
                     print u"Debe ingresar un nombre válido\n"
                 else:
                     nombre = nombre
                     break
-        
+
         if level == 1: # Entrando al Nivel 1
             while repetir == "si":
                 self.misiones(level, nombre)
                 time.sleep(1)
                 puntos = self.start_single(1, 5, nombre)
-                os.system("clear")
+                os.system("reset")
 
                 if puntos >= 40 and puntos <= 50:
                     print "Misión Cumplida Soldado"
@@ -740,24 +741,25 @@ class _Player(object):
                         repetir = repetir.lower()
                         try:
                             if repetir == "no":
-                                #self.sonido.stop()
-                                os.system("clear")
+                                self.sonido.stop()
+                                os.system("reset")
                                 self.menu_single()
                             elif repetir == "si":
-                                #self.sonido.stop()
+                                self.sonido.stop()
                                 time.sleep(1)
                                 self.limpiar()
                                 self.armar_tableros()
-                                os.system("clear")
+                                os.system("reset")
+                                self.sonido.play(loops=8, maxtime=0, fade_ms=0)
                                 break
                             else:
                                 print "Error de ingreso"
                                 time.sleep(1)
-                                os.system("clear")
+                                os.system("reset")
                         except(RuntimeError, TypeError, NameError, ValueError):
-                            os.system("clear")
+                            os.system("reset")
                 time.sleep(2)
-                os.system("clear")
+                os.system("reset")
         self.limpiar()
         self.armar_tableros()
 
@@ -766,7 +768,7 @@ class _Player(object):
                 self.misiones(level, nombre)
                 time.sleep(1)
                 puntos = self.start_single(2, 7, nombre)
-                os.system("clear")
+                os.system("reset")
 
                 if puntos >= 60 and puntos <= 70:
                     print "Misión Cumplida Soldado"
@@ -786,24 +788,25 @@ class _Player(object):
                         repetir = repetir.lower()
                         try:
                             if repetir == "no":
-                                #self.sonido.stop()
-                                os.system("clear")
+                                self.sonido.stop()
+                                os.system("reset")
                                 self.menu_single()
                             elif repetir == "si":
-                                #self.sonido.stop()
+                                self.sonido.stop()
                                 time.sleep(1)
                                 self.limpiar()
                                 self.armar_tableros()
-                                os.system("clear")
+                                os.system("reset")
+                                self.sonido.play(loops=8, maxtime=0, fade_ms=0)
                                 break
                             else:
                                 print "Error de ingreso"
                                 time.sleep(1)
-                                os.system("clear")
+                                os.system("reset")
                         except(RuntimeError, TypeError, NameError, ValueError):
-                            os.system("clear")
+                            os.system("reset")
                 time.sleep(2)
-                os.system("clear")
+                os.system("reset")
         self.limpiar()
         self.armar_tableros()
 
@@ -812,7 +815,7 @@ class _Player(object):
                 self.misiones(level, nombre)
                 time.sleep(1)
                 puntos = self.start_single(3, 10, nombre)
-                os.system("clear")
+                os.system("reset")
 
                 if puntos >= 70 and puntos <= 100:
                     print "Misión Cumplida Soldado"
@@ -832,24 +835,25 @@ class _Player(object):
                         repetir = repetir.lower()
                         try:
                             if repetir == "no":
-                                #self.sonido.stop()
-                                os.system("clear")
+                                self.sonido.stop()
+                                os.system("reset")
                                 self.menu_single()
                             elif repetir == "si":
-                                #self.sonido.stop()
+                                self.sonido.stop()
                                 time.sleep(1)
                                 self.limpiar()
                                 self.armar_tableros()
-                                os.system("clear")
+                                os.system("reset")
+                                self.sonido.play(loops=8, maxtime=0, fade_ms=0)
                                 break
                             else:
                                 print "Error de ingreso"
                                 time.sleep(1)
-                                os.system("clear")
+                                os.system("reset")
                         except(RuntimeError, TypeError, NameError, ValueError):
-                            os.system("clear")
+                            os.system("reset")
                 time.sleep(2)
-                os.system("clear")
+                os.system("reset")
         self.limpiar()
         self.armar_tableros()
 
@@ -858,7 +862,7 @@ class _Player(object):
                 self.misiones(level, nombre)
                 time.sleep(1)
                 puntos = self.start_single(4, 12, nombre)
-                os.system("clear")
+                os.system("reset")
 
                 if puntos >= 100 and puntos <= 120:
                     print "Misión Cumplida Soldado"
@@ -871,7 +875,7 @@ class _Player(object):
                     break
                 elif puntos <= 90:
                     print "Misión Fallida Soldado"
-                    print """Algo me decia que no eras capaz de 
+                    print """Algo me decia que no eras capaz de
                     completar esta misión.
 
                     Y así te haces llamar Teniente?
@@ -882,24 +886,25 @@ class _Player(object):
                         repetir = repetir.lower()
                         try:
                             if repetir == "no":
-                                #self.sonido.stop()
-                                os.system("clear")
+                                self.sonido.stop()
+                                os.system("reset")
                                 self.menu_single()
                             elif repetir == "si":
-                                #self.sonido.stop()
+                                self.sonido.stop()
                                 time.sleep(1)
                                 self.limpiar()
                                 self.armar_tableros()
-                                os.system("clear")
+                                os.system("reset")
+                                self.sonido.play(loops=8, maxtime=0, fade_ms=0)
                                 break
                             else:
                                 print "Error de ingreso"
                                 time.sleep(1)
-                                os.system("clear")
+                                os.system("reset")
                         except(RuntimeError, TypeError, NameError, ValueError):
-                            os.system("clear")
+                            os.system("reset")
                 time.sleep(2)
-                os.system("clear")
+                os.system("reset")
         self.limpiar()
         self.armar_tableros()
 
@@ -908,7 +913,7 @@ class _Player(object):
                 self.misiones(level, nombre)
                 time.sleep(1)
                 puntos = self.start_single(5, 15, nombre)
-                os.system("clear")
+                os.system("reset")
 
                 if puntos >= 120 and puntos <= 150:
                     print "Misión Cumplida Soldado"
@@ -934,54 +939,55 @@ class _Player(object):
                         repetir = repetir.lower()
                         try:
                             if repetir == "no":
-                                #self.sonido.stop()
-                                os.system("clear")
+                                self.sonido.stop()
+                                os.system("reset")
                                 self.menu_single()
                             elif repetir == "si":
-                                #self.sonido.stop()
+                                self.sonido.stop()
                                 time.sleep(1)
                                 self.limpiar()
                                 self.armar_tableros()
-                                os.system("clear")
+                                os.system("reset")
+                                self.sonido.play(loops=8, maxtime=0, fade_ms=0)
                                 break
                             else:
                                 print "Error de ingreso"
                                 time.sleep(1)
-                                os.system("clear")
+                                os.system("reset")
                         except(RuntimeError, TypeError, NameError, ValueError):
-                            os.system("clear")
+                            os.system("reset")
                 time.sleep(2)
-                os.system("clear")
+                os.system("reset")
         self.limpiar()
         self.armar_tableros()
         self.menu_single()
 
     def rango_naval(self):
-            """ Titulos del Single Player"""
-            self.pixer.play(loops=3, maxtime=0, fade_ms=0)
-            ordenar = self.medallas
-            por_puntos = self.puntos
-            cont = 0
-            impresion = []
+        """ Titulos del Single Player"""
+        self.pixer.play(loops=3, maxtime=0, fade_ms=0)
+        ordenar = self.medallas
+        por_puntos = self.puntos
 
-            print"                           ***** BattleShip Medallero * Single Player © ***** \n"
+        print"                   ***** BattleShip Medallero * Single Player © ***** \n"
 
-            #print ordenar
-            for i in por_puntos:
-                print "Nombre: "+ str(i)
-                print "Puntos: "+ str(por_puntos[i])
-                print "Rango Naval: "+ str(ordenar[i]) + "\n\n"
+        #print ordenar
+        for i in por_puntos:
+            print "Nombre: "+ str(i)
+            print "Puntos: "+ str(por_puntos[i])
+            print "Rango Naval: "+ str(ordenar[i]) + "\n\n"
 
-            raw_input("Presione enter para continuar... ")
-            self.pixer.stop()
-            os.system("reset")
-            self.menu_single()
+        raw_input("Presione enter para continuar... ")
+        self.pixer.stop()
+        os.system("reset")
+        self.menu_single()
 
     def instrucciones_single(self):
         """Instrucciones del Single Player"""
         self.pixer.play(loops=2, maxtime=0, fade_ms=0)
         print"                           ***** BattleShip Instrucciones * Single Player © ***** \n"
-        print """ En este modo de juego deberas completar 5 misiones navales como jamás lo imaginaste.
+        print """
+        En este modo de juego deberas completar 5 
+        misiones navales como jamás lo imaginaste.
 
         Las Misiones se cargaran automáticamente y para empezar el ataque 
         deberas ingresar las coordenadas a tu elección (fila-columna).
@@ -1019,10 +1025,9 @@ class _Player(object):
         self.epica.play(loops=3, maxtime=0, fade_ms=0)
         menu_sing = {1:self.instrucciones_single, 2:self.niveles, 3:self.rango_naval, 4:menu}
         opcion = 0
-        
         while True:
 
-            print"                           ***** BattleShip Menú * Single Player © ***** \n"
+            print"                    ***** BattleShip Menú * Single Player © ***** \n"
             print "1. Instrucciones"
             print "2. Jugar"
             print "3. Medallero"
@@ -1036,85 +1041,84 @@ class _Player(object):
                 else:
                     print "Ingrese opción válida\n"
                     time.sleep(1)
-                    os.system("clear")
+                    os.system("reset")
             except(RuntimeError, TypeError, NameError, ValueError):
                 print "Ingrese opción válida\n"
                 time.sleep(1)
-                os.system("clear")
+                os.system("reser")
 
-        if menu_sing.has_key(opcion) and opcion == 4 :
-            #epica.stop()    
-            os.system("clear")
-            valor = menu_sing[opcion]()
+        if menu_sing.has_key(opcion) and opcion == 4:
+            self.epica.stop()
+            os.system("reset")
+            menu_sing[opcion]()
         else:
-            #epica.stop()
-            os.system("clear")    
-            valor = menu_sing[opcion]()
+            self.epica.stop()
+            os.system("reset")
+            menu_sing[opcion]()
 
         opcion = 0
 
 
-################################################################################################################################################################################################
-#########################################################################               Clase Multiplayer             ##########################################################################
-################################################################################################################################################################################################
+##############################################################
+##############        Clase Multi-Player       ###############
+##############################################################
 
-class _Multi_Player(object):
-    """Clase de _Multi_Player"""
+
+class _Mplayer(object):
+    """Clase de _Mplayer"""
 
     def __init__(self):
         """ Iniciamos Variables Globales """
-        self.up = pygame.mixer.Sound("up.wav") #declaramos el sonido del multiplayer - UP
-        self.explosion = pygame.mixer.Sound("ex.wav") #declaramos el sonido de explosiones - EX
-        self.epica = pygame.mixer.Sound("epica.wav")
-        self.pixer = pygame.mixer.Sound("inss.wav")
+        self.batalla = pygame.mixer.Sound("up.wav") #declaramos el sonido - UP
+        self.explosion = pygame.mixer.Sound("ex.wav") #declaramos el sonido - EX
+        self.epica = pygame.mixer.Sound("epica.wav") #iniciamos el sonido - EPICA
+        self.pixer = pygame.mixer.Sound("inss.wav") #iniciamos el sonido - INSS
+
+        self.nombre1 = ""
+        self.nombre2 = ""
         self.tabla_de_puntajes = {}
-        self.rangos = { }
-        self.tablero_J1 = []
-        self.tablero_J2 = []
-        self.board_J1 = []
-        self.board_J2 = []
-   
+        self.rangos = {}
+        self.tablero_j1 = []
+        self.tablero_j2 = []
+        self.board_j1 = []
+        self.board_j2 = []
+
         #Iniciamos Métodos
         self.armar_tableros()
 
     def limpiar(self):
-        self.tablero_J1 = []
-        self.tablero_J2 = []
-        self.board_J1 = []
-        self.board_J2 = []
-        
+        """ Limpiar """
+        self.tablero_j1 = []
+        self.tablero_j2 = []
+        self.board_j1 = []
+        self.board_j2 = []
+
     def armar_tableros(self):
         """ Armamos Tablero 1 y 2 """
-        for tablero in range(0, 10):
-            self.tablero_J1.append(10 * ['♒'])
-
-        for tablero in range(0, 10):
-            self.tablero_J2.append(10 * ['♒'])
-
-        for board in range(0, 10):
-            self.board_J1.append(10 * ['♒'])
-
-        for board in range(0, 10):
-            self.board_J2.append(10 * ['♒'])
+        for _ in range(0, 10):
+            self.tablero_j1.append(10 * ['♒'])
+            self.tablero_j2.append(10 * ['♒'])
+            self.board_j1.append(10 * ['♒'])
+            self.board_j2.append(10 * ['♒'])
 
     def print_tablero(self, tablero):
         """ Imprimimos Tablero 1 """
-        print "    0  |  1  |  2  |  3  |  4  |  5  |  6  |  7  |  8  |  9  |"
-        print "    - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  \n"
+        print "   |  0  |  1  |  2  |  3  |  4  |  5  |  6  |  7  |  8  |  9  |"
+        print "   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  \n"
         cont = 0
         for i in tablero:
-            print str(cont) + " | " + " | ".join(i)
-            print "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  \n"
+            print str(cont) + "  |  " + "  |  ".join(i) + "  |"
+            print "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n"
             cont += 1
 
     def print_board(self, board):
         """ Imprimimos Tablero en Blanco player 1 """
-        print "    0  |  1  |  2  |  3  |  4  |  5  |  6  |  7  |  8  |  9  |"
-        print "    - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n"
+        print "   |  0  |  1  |  2  |  3  |  4  |  5  |  6  |  7  |  8  |  9  |"
+        print "   - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  \n"
         cont = 0
         for i in board:
-            print str(cont) + " | " + " | ".join(i)
-            print "- - - - - - - - - - - - - - - - - - - - - - - - - - - - -  \n"
+            print str(cont) + "  |  " + "  |  ".join(i) + "  |"
+            print "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \n"
             cont += 1
 
     def opcion_pos(self):
@@ -1129,11 +1133,11 @@ class _Multi_Player(object):
                 else:
                     print "Error Ingreso Incorrecto\n"
                     time.sleep(1)
-                    os.system("clear")
+                    os.system("reset")
             except (KeyboardInterrupt, RuntimeError, TypeError, NameError, ValueError):
                 print "Error Ingreso Incorrecto\n"
                 time.sleep(1)
-                os.system("clear")
+                os.system("reset")
         return position
 
 
@@ -1149,11 +1153,11 @@ class _Multi_Player(object):
                 else:
                     print "¡Error! Coordenada Incorrecta\n"
                     time.sleep(1)
-                    os.system("clear")
+                    os.system("reset")
             except (KeyboardInterrupt, RuntimeError, TypeError, NameError, ValueError):
                 print "Error Ingreso Incorrecto\n"
                 time.sleep(1)
-                os.system("clear")
+                os.system("reset")
         return fila
 
     def columna_player(self):
@@ -1168,11 +1172,11 @@ class _Multi_Player(object):
                 else:
                     print "¡Error! Coordenada Incorrecta\n"
                     time.sleep(1)
-                    os.system("clear")
+                    os.system("reset")
             except (KeyboardInterrupt, RuntimeError, TypeError, NameError, ValueError):
                 print "Error Ingreso Incorrecto\n"
                 time.sleep(1)
-                os.system("clear")
+                os.system("reset")
         return columna
 
     def numero_barcos(self, bomba):
@@ -1190,11 +1194,11 @@ class _Multi_Player(object):
                 else:
                     print "Error Ingreso Incorrecto\n"
                     time.sleep(1)
-                    os.system("clear")
+                    os.system("reset")
             except (KeyboardInterrupt, RuntimeError, TypeError, NameError, ValueError):
                 print "Error Ingreso Incorrecto\n"
                 time.sleep(1)
-                os.system("clear")
+                os.system("reset")
         return ship
 
     def validar_horizontal(self, barco_fila, barco_col, contador, tablero):
@@ -1243,11 +1247,11 @@ class _Multi_Player(object):
 
     def colocar_barcos_players(self, tablero, player):
         '''Posicionando Barcos'''    # Declaramos Sonido del Juego
-        os.system("clear")
+        os.system("reset")
         board = []
         print
         print " ☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠ "
-        print " ☠☠☠☠             BattleShip Tablero: Jugador ",player,"         ☠☠☠☠ "
+        print "              BattleShip Tablero Jugador: ", player
         print " ☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠ \n\n"
         self.print_tablero(tablero)
         print
@@ -1269,7 +1273,7 @@ class _Multi_Player(object):
                 else:
                     print "¡Error Solo puedes ingresar un máximo de 3 barcos!"
                     time.sleep(1)
-                    os.system("clear")
+                    os.system("reset")
 
         #Barcos de 5
         while no_barcos < cant_barcos:
@@ -1337,7 +1341,7 @@ class _Multi_Player(object):
         print " ☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠ \n\n"
         self.print_tablero(tablero)
         bar_fil = 0
-        bar_col = 0 
+        bar_col = 0
         opcion = 0
         no_barcos = 0
         barco = 4
@@ -1353,7 +1357,7 @@ class _Multi_Player(object):
                 else:
                     print "¡Error Solo puedes ingresar un máximo de 4 barcos!"
                     time.sleep(1)
-                    os.system("clear")
+                    os.system("reset")
 
         #Barcos de 4
         while no_barcos < cant_barcos:
@@ -1438,7 +1442,7 @@ class _Multi_Player(object):
                 else:
                     print "¡Error Solo puedes ingresar un máximo de 6 barcos!"
                     time.sleep(1)
-                    os.system("clear")
+                    os.system("reset")
 
         #Barcos de 3
         while no_barcos < cant_barcos:
@@ -1522,7 +1526,7 @@ class _Multi_Player(object):
                 else:
                     print "¡Error Solo puedes ingresar un máximo de 10 barcos!"
                     time.sleep(1)
-                    os.system("clear")
+                    os.system("reset")
 
         #Barcos de 2
         while no_barcos < cant_barcos:
@@ -1607,7 +1611,7 @@ class _Multi_Player(object):
                 else:
                     print "¡Error Solo puedes ingresar un máximo de 15 barcos!"
                     time.sleep(1)
-                    os.system("clear")
+                    os.system("reset")
 
         #Barcos de 1
         while no_barcos < cant_barcos:
@@ -1654,7 +1658,7 @@ class _Multi_Player(object):
                 else:
                     print "¡Error Solo puedes ingresar un máximo de 7 barcos!"
                     time.sleep(1)
-                    os.system("clear")
+                    os.system("reset")
 
         print "\n                    ☠☠☠☠☠☠  ☠. Bombas ☠☠☠☠☠☠"
         while no_barcos < cant_barcos:
@@ -1700,19 +1704,18 @@ class _Multi_Player(object):
 
     def play_j1(self, turno, score, nombre1, nombre2, oportunidad):
         """ Jugador 1 """
-        repetido = 0
         decremento = oportunidad
         while True:
             print "Turno:", (turno +1)# ¡Muestra (turno + 1) aquí!
             print " ☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠ "
-            print "                       Tablero",nombre1
+            print "                       Tablero", nombre1
             print " ☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠ \n\n"
-            self.print_tablero(self.tablero_J1)
+            self.print_tablero(self.tablero_j1)
             print "\n"
             print " ☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠ "
-            print "                       Tablero",nombre2
+            print "                       Tablero", nombre2
             print " ☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠ \n\n"
-            self.print_tablero(self.board_J2)
+            self.print_tablero(self.board_j2)
             print "\n"
 
             adiv_fil = raw_input("Adivina fila: ")#fila
@@ -1725,26 +1728,27 @@ class _Multi_Player(object):
                 else:
                     print "Ingrese coordenadas válidas\n"
                     time.sleep(1)
-                    os.system("clear")
+                    os.system("reset")
             except(RuntimeError, TypeError, NameError, ValueError):
                 print "Ingrese coordenadas válidas\n"
                 time.sleep(1)
-                os.system("clear")
+                os.system("reset")
         if (adiv_fil >= 0 and adiv_fil <= 9) and (adiv_col >= 0 and adiv_col <= 9):
             #tiro repetido
-            if (self.board_J2[adiv_fil][adiv_col] == "☠") or (self.board_J2[adiv_fil][adiv_col] == "X"):
+            if (self.board_j2[adiv_fil][adiv_col] == "☠") or \
+                (self.board_j2[adiv_fil][adiv_col] == "X"):
                 print "Ya dijiste esa."
-                self.print_board(self.board_J2)
+                self.print_board(self.board_j2)
                 #hundiendo barco
-            elif self.tablero_J2[adiv_fil][adiv_col] == "⚓":
+            elif self.tablero_j2[adiv_fil][adiv_col] == "⚓":
                 print "¡Felicitaciones! ¡Hundiste mi barco!"
                 score += 10
                 self.explosion.play()
-                self.board_J2[adiv_fil][adiv_col] = "☠"
-                self.tablero_J2[adiv_fil][adiv_col] = "☠"
-                self.print_board(self.board_J2)
+                self.board_j2[adiv_fil][adiv_col] = "☠"
+                self.tablero_j2[adiv_fil][adiv_col] = "☠"
+                self.print_board(self.board_j2)
 
-            elif self.tablero_J1[adiv_fil][adiv_col] == "*":
+            elif self.tablero_j1[adiv_fil][adiv_col] == "*":
                 print "¡ Fatal Marino has impactado en la bomba !"
                 score = 0
                 return 16
@@ -1752,35 +1756,33 @@ class _Multi_Player(object):
             else:
                 #No impacte el barco
                 print "¡No impactaste mi barco!"
-                self.board_J2[adiv_fil][adiv_col] = "X"
-                self.tablero_J2[adiv_fil][adiv_col] = "X"
-                self.print_board(self.board_J2)
+                self.board_j2[adiv_fil][adiv_col] = "X"
+                self.tablero_j2[adiv_fil][adiv_col] = "X"
+                self.print_board(self.board_j2)
         else:
             #fuera oceano
             if (adiv_fil < 0 or adiv_fil > 9) or (adiv_col < 0 or adiv_col > 9):
-                repetido += 1
                 print "Vaya, esto ni siquiera está en el océano."
-                self.print_board(self.board_J2)
+                self.print_board(self.board_j2)
         print "Turnos Restantes: "+ str(decremento - 1)
         print "puntos al momento: "+ str(score)
         time.sleep(2)
-        os.system("clear")
+        os.system("reset")
         return score
 
     def play_j2(self, turno, score, nombre1, nombre2, oportunidad):
         """ Jugador 2 """
-        repetido = 0
         decremento = oportunidad
         while True:
             print "Turno:", (turno +1)# ¡Muestra (turno + 1) aquí!
             print " ☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠ "
-            print "                       Tablero",nombre2
+            print "                       Tablero", nombre2
             print " ☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠ \n\n"
-            self.print_tablero(self.tablero_J2)
+            self.print_tablero(self.tablero_j2)
             print " ☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠ "
-            print "                       Tablero",nombre1
+            print "                       Tablero", nombre1
             print " ☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠ \n\n"
-            self.print_tablero(self.board_J1)
+            self.print_tablero(self.board_j1)
             print "\n"
 
             adiv_fil = raw_input("Adivina fila: ")#fila
@@ -1793,59 +1795,57 @@ class _Multi_Player(object):
                 else:
                     print "Ingrese coordenadas válidas\n"
                     time.sleep(1)
-                    os.system("clear")
+                    os.system("reset")
             except(RuntimeError, TypeError, NameError, ValueError):
                 print "Ingrese coordenadas válidas\n"
                 time.sleep(1)
-                os.system("clear")
+                os.system("reset")
         #hundiendo barco
         if (adiv_fil >= 0 and adiv_fil <= 9) and (adiv_col >= 0 and adiv_col <= 9):
             #tiro repetido
-            if (self.board_J1[adiv_fil][adiv_col] == "☠" ) or (self.board_J1[adiv_fil][adiv_col] == "X"):
+            if (self.board_j1[adiv_fil][adiv_col] == "☠") or \
+                (self.board_j1[adiv_fil][adiv_col] == "X"):
                 print "Ya dijiste esa."
-                self.print_board(self.board_J1)
-            elif self.tablero_J1[adiv_fil][adiv_col] == "⚓":
+                self.print_board(self.board_j1)
+            elif self.tablero_j1[adiv_fil][adiv_col] == "⚓":
                 print "¡Felicitaciones! ¡Hundiste mi barco!"
                 score += 10
                 self.explosion.play()
-                self.board_J1[adiv_fil][adiv_col] = "☠"
-                self.tablero_J1[adiv_fil][adiv_col] = "☠"
-                self.print_board(self.board_J1)
+                self.board_j1[adiv_fil][adiv_col] = "☠"
+                self.tablero_j1[adiv_fil][adiv_col] = "☠"
+                self.print_board(self.board_j1)
 
-            elif self.tablero_J1[adiv_fil][adiv_col] == "*":
+            elif self.tablero_j1[adiv_fil][adiv_col] == "*":
                 print "¡ Fatal Marino has impactado en la bomba !"
                 score = 0
                 return 16
             else:
                 #No impacte el barco
                 print "¡No impactaste mi barco!"
-                self.board_J1[adiv_fil][adiv_col] = "X"
-                self.tablero_J1[adiv_fil][adiv_col] = "X"
-                self.print_board(self.board_J1)
+                self.board_j1[adiv_fil][adiv_col] = "X"
+                self.tablero_j1[adiv_fil][adiv_col] = "X"
+                self.print_board(self.board_j1)
         else:
             #fuera oceano
             if (adiv_fil < 0 or adiv_fil > 9) or (adiv_col < 0 or adiv_col > 9):
-                repetido += 1
                 print "Vaya, esto ni siquiera está en el océano."
-                self.print_board(self.board_J1)
+                self.print_board(self.board_j1)
 
         print "Turnos Restantes: "+ str(decremento - 1)
         print "puntos al momento: "+ str(score)
         time.sleep(2)
-        os.system("clear")
+        os.system("reset")
         return score
 
     def start_players(self):
         """Inicia el Multi_Player"""
-        self.up.play(loops=5, maxtime=0, fade_ms=0) 
-        self.nombre1 = ""
-        self.nombre2 = ""
+        self.batalla.play(loops=5, maxtime=0, fade_ms=0)
         score = 0
         oportunidad = 2
-        cont_J1 = 0
-        cont_J2 = 0
-        puntaje_J1 = 0
-        puntaje_J2 = 0
+        cont_j1 = 0
+        cont_j2 = 0
+        puntaje_j1 = 0
+        puntaje_j2 = 0
         repetir = "si"
         while repetir == "si":
             self.limpiar()
@@ -1862,7 +1862,7 @@ class _Multi_Player(object):
                     self.nombre1 = int(self.nombre1)
                     print u"Debe ingresar un nombre válido\n"
                 except(RuntimeError, NameError, ValueError):
-                    if (len(self.nombre1) <= 2):
+                    if len(self.nombre1) <= 2:
                         print u"Debe ingresar un nombre válido\n"
                     else:
                         self.nombre1 = self.nombre1
@@ -1875,20 +1875,24 @@ class _Multi_Player(object):
                     self.nombre2 = float(self.nombre2)
                     self.nombre2 = int(self.nombre2)
                     print u"Debe ingresar un nombre válido\n"
+                    time.sleep(2)
+                    os.system("reset")
                 except(RuntimeError, NameError, ValueError):
-                    if (len(self.nombre2) <= 2):
+                    if len(self.nombre2) <= 2:
                         print u"Debe ingresar un nombre válido\n"
+                        time.sleep(2)
+                        os.system("reset")
                     else:
                         self.nombre2 = self.nombre2
                         break
-            print "             ☠☠☠☠☠☠☠☠☠☠☠☠☠☠ ",self.nombre1," ☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠"
+            print "             ☠☠☠☠☠☠☠☠☠☠☠☠☠☠ ", self.nombre1, " ☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠"
             raw_input("Presione Enter para Continuar ...")
-            self.tablero_J1 = self.colocar_barcos_players(self.tablero_J1, self.nombre1)
-            os.system("clear")
+            self.tablero_j1 = self.colocar_barcos_players(self.tablero_j1, self.nombre1)
+            os.system("reset")
 
-            print "             ☠☠☠☠☠☠☠☠☠☠☠☠☠☠ ",self.nombre2," ☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠"
+            print "             ☠☠☠☠☠☠☠☠☠☠☠☠☠☠ ", self.nombre2, " ☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠"
             raw_input("Presione Enter para Continuar ...")
-            self.tablero_J2 = self.colocar_barcos_players(self.tablero_J2, self.nombre2)
+            self.tablero_j2 = self.colocar_barcos_players(self.tablero_j2, self.nombre2)
             os.system("reset")
             turno = 0
 
@@ -1898,75 +1902,74 @@ class _Multi_Player(object):
 
             while turno < oportunidad:#¡De aquí en adelante todo debería ir en tu bucle for!
 
-                cont_J1 = self.play_j1(turno, score, self.nombre1, self.nombre2, oportunidad) 
-                cont_J2 = self.play_j2(turno, score, self.nombre1, self.nombre2, oportunidad)
+                cont_j1 = self.play_j1(turno, score, self.nombre1, self.nombre2, oportunidad)
+                cont_j2 = self.play_j2(turno, score, self.nombre1, self.nombre2, oportunidad)
 
-                if cont_J1 == 16:
+                if cont_j1 == 16:
                     print self.nombre1 + " Lo Sentimos has perdido. "
                     break
-                elif cont_J2 == 16:
+                elif cont_j2 == 16:
                     print self.nombre2 + " Lo Sentimos has perdido. "
                     break
                 else:
-                    puntaje_J1 += cont_J1
-                    puntaje_J2 += cont_J2
+                    puntaje_j1 += cont_j1
+                    puntaje_j2 += cont_j2
 
                 turno += 1
                 #contador de turnos
-                if turno == oportunidad or cont_J1 == 16 or cont_J2 == 16:
+                if turno == oportunidad or cont_j1 == 16 or cont_j2 == 16:
                     print "Terminó el juego"
-                    print "Puntaje "+ self.nombre1 + ": "+ str(puntaje_J1)
-                    print "Puntaje "+ self.nombre2 + ": "+ str(puntaje_J2)
+                    print "Puntaje "+ self.nombre1 + ": "+ str(puntaje_j1)
+                    print "Puntaje "+ self.nombre2 + ": "+ str(puntaje_j2)
 
-                    if puntaje_J1 > puntaje_J2:
+                    if puntaje_j1 > puntaje_j2:
                         print " ☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠ "
-                        print "         ¡Felicitaciones! ",self.nombre1," ¡Has Ganado!      "
+                        print "         ¡Felicitaciones! ", self.nombre1, " ¡Has Ganado!      "
                         print " ☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠ \n\n"
-                        self.llenado_de_puntajes(self.nombre1, puntaje_J1, 1)
-                    elif puntaje_J2 > puntaje_J1:
+                        self.llenado_de_puntajes(self.nombre1, puntaje_j1, 1)
+                    elif puntaje_j2 > puntaje_j1:
                         print " ☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠ "
-                        print "         ¡Felicitaciones! ",self.nombre2," ¡Has Ganado!       "
+                        print "         ¡Felicitaciones! ", self.nombre2, " ¡Has Ganado!       "
                         print " ☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠ \n\n"
-                        self.llenado_de_puntajes(self.nombre1, puntaje_J1, 2)
-                    elif puntaje_J1 == puntaje_J2:
+                        self.llenado_de_puntajes(self.nombre1, puntaje_j1, 2)
+                    elif puntaje_j1 == puntaje_j2:
                         print " ☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠ "
                         print " ☠☠☠☠           ¡Excelente Marinos han Empatado!          ☠☠☠☠ "
                         print " ☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠ \n\n"
-                        self.llenado_de_puntajes(self.nombre1, puntaje_J1, 1)
-                        self.llenado_de_puntajes(self.nombre1, puntaje_J1, 2)
-            
+                        self.llenado_de_puntajes(self.nombre1, puntaje_j1, 1)
+                        self.llenado_de_puntajes(self.nombre1, puntaje_j1, 2)
             while True:
                 repetir = raw_input("¿Desea jugar otra vez? si/no\n")
                 repetir = repetir.lower()
                 try:
                     if repetir == "no":
+                        self.batalla.stop()
                         break
-                        self.up.stop()
                     elif repetir == "si":
-                        self.up.stop()
+                        self.batalla.stop()
                         time.sleep(1)
                         self.limpiar()
                         self.armar_tableros()
-                        os.system("clear")
+                        os.system("reset")
                         self.start_players()
 
                     else:
                         print "Error de ingreso"
                         time.sleep(1)
-                        os.system("clear")
+                        os.system("reset")
                 except(RuntimeError, TypeError, NameError, ValueError):
-                    os.system("clear")
+                    os.system("reset")
 
-            os.system("clear")
+            os.system("reset")
             self.menu_multi()
 
     def llenado_de_puntajes(self, nombre, puntos, player):
-
+        """ Llenado de Diccionarios """
         if player == 1 or player == 2:
 
             if puntos >= 10 and puntos <= 20:
                 self.rangos[nombre] = "Cabo"
-            elif puntos >= 30 and puntos <=40:
+            elif puntos >= 30 and puntos <= 40:
                 self.rangos[nombre] = "Sargento"
             elif puntos >= 50 and puntos <= 60:
                 self.rangos[nombre] = "Teniente"
@@ -1984,7 +1987,7 @@ class _Multi_Player(object):
         raw_input("Presione enter para continuar... ")
 
 
-    def instrucciones_multi(self):
+    def inst_multi(self):
         """Instrucciones del Multiplayer"""
         self.pixer.play(loops=3, maxtime=0, fade_ms=0)
         print"                           ***** BattleShip Instrucciones * Multi-Player © ***** \n"
@@ -2023,14 +2026,9 @@ class _Multi_Player(object):
     def puntajes_altos(self):
         """Puntajes Altos del Multiplayer"""
         self.pixer.play(loops=3, maxtime=0, fade_ms=0)
-        
-        print"                           ***** BattleShip Medallero * Multi-Player © ***** \n"
-        
+        print"                      ***** BattleShip Medallero * Multi-Player © ***** \n"
         max_score = self.tabla_de_puntajes
         puesto_naval = self.rangos
-        cont = 0
-        impresion = []
-
 
         #print ordenar
         for i in max_score:
@@ -2046,12 +2044,12 @@ class _Multi_Player(object):
 
     def menu_multi(self):
         """funcion menu Multiplayer"""
-        menu_multiplay = {1:self.instrucciones_multi, 2:self.start_players, 3:self.puntajes_altos, 4:menu}
+        menu_multiplay = {1:self.inst_multi, 2:self.start_players, 3:self.puntajes_altos, 4:menu}
         opcion = 0
         self.epica.play(loops=3, maxtime=0, fade_ms=0)
         while True:
 
-            print"                           ***** BattleShip Menú * Multi-Player © ***** \n"
+            print"                   ***** BattleShip Menú * Multi-Player © ***** \n"
             print "1. Instrucciones"
             print "2. Jugar"
             print "3. Medallero"
@@ -2065,54 +2063,63 @@ class _Multi_Player(object):
                 else:
                     print "Ingrese opción válida\n"
                     time.sleep(1)
-                    os.system("clear")
+                    os.system("reset")
             except(RuntimeError, TypeError, NameError, ValueError):
                 print "Ingrese opción válida\n"
                 time.sleep(1)
-                os.system("clear")
+                os.system("reset")
 
         if menu_multiplay.has_key(opcion):
-            epica.stop()    
-            os.system("clear")
-            valor = menu_multiplay[opcion]()
-        else:    
+            self.epica.stop()
+            os.system("reset")
+            menu_multiplay[opcion]()
+        else:
             "No existe la clave"
 
         opcion = 0
 
 
 
-################################################################################################################################################################################################
-#########################################################################                   Clase Menu                ##########################################################################
-################################################################################################################################################################################################
+##############################################################
+##############            Clase Menu           ###############
+##############################################################
+
 
 def instrucciones():
     """Acerca de Batalla Naval """
-    pixer.play(loops=4, maxtime=0, fade_ms=0)
+    PIXER.play(loops=4, maxtime=0, fade_ms=0)
     os.system("reset")
-    print " ☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠ "        
+    print " ☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠ "
     print " ☠☠☠☠                Acerca de Batalla Naval              ☠☠☠☠ "
     print " ☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠ \n\n"
 
     print """Batalla Naval:
     La batalla naval (juego de los barquitos o hundir la flota,
     nombre con el que se comercializó en España el juego de mesa;
-    hundiendo barquitos, en algunos lugares de Hispanoamérica), del nombre en inglés battleship,
-    es un juego tradicional de adivinación que involucra a dos participantes.
+    hundiendo barquitos, en algunos lugares de Hispanoamérica),
+    del nombre en inglés battleship,es un juego tradicional
+    de adivinación que involucra a dos participantes.
 
-    Se ha comercializado como juego de mesa en distintos formatos por varias marcas.
-    El primero en sacarlo al mercado fue Milton Bradley Company, en 1931, y se jugaba con lápiz y papel.
-    En 2012 se estrenó una película basada en el juego, titulada Battleship."""
+    Se ha comercializado como juego de mesa
+    en distintos formatos por varias marcas.
+    El primero en sacarlo al mercado fue Milton Bradley Company,
+    en 1931, y se jugaba con lápiz y papel.
+    En 2012 se estrenó una película basada en el juego,
+    titulada Battleship."""
     print " ☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠ \n"
-    
+
     print """Tableros:
     Cada jugador maneja dos tableros divididos en casillas.
-    Cada tablero representa una zona diferente del mar abierto: la propia y la contraria.
-    En uno de los tableros, el jugador coloca sus barcos y registra los «tiros» del oponente;
-    en el otro, se registran los tiros propios, al tiempo que se deduce la posición de los barcos del contrincante.
+    Cada tablero representa una zona diferente del mar abierto:
+    la propia y la contraria.
+    En uno de los tableros, el jugador coloca sus barcos y registra
+    los «tiros» del oponente;
+    en el otro, se registran los tiros propios, al tiempo que se
+    deduce la posición de los barcos del contrincante.
 
     Naves:
-    Al comenzar, cada jugador posiciona sus barcos en el primer tablero, de forma secreta, invisible al oponente.
+    Al comenzar, cada jugador posiciona sus barcos en el 
+    primer tablero, de forma secreta, invisible al oponente.
 
     Cada quien ocupa, según sus preferencias, una misma
     cantidad de casillas, horizontal y/o verticalmente,
@@ -2130,81 +2137,97 @@ def instrucciones():
 
     Desarrollo del juego
     Una vez todas las naves han sido posicionadas,
-    se inicia una serie de rondas. En cada ronda, cada jugador en su turno «dispara»
-    hacia la flota de su oponente indicando una posición (las coordenadas de una casilla),
-    la que registra en el segundo tablero. Si esa posición es ocupada por parte de un barco contrario,
+    se inicia una serie de rondas. En cada ronda, cada
+    jugador en su turno «dispara»
+    hacia la flota de su oponente indicando una posición
+    (las coordenadas de una casilla),
+    la que registra en el segundo tablero.
+    Si esa posición es ocupada por parte de un barco contrario,
     el oponente cantará ¡Averiado! (¡Toque! o ¡Tocado!) si todavía
     quedan partes del barco (casillas) sin dañar, o
     ¡Hundido! si con ese disparo la nave ha quedado totalmente destruida
     (esto es, si la acertada es la última de las casillas
     que conforman la nave que quedaba por acertar).
-    Si la posición indicada no corresponde a una parte de barco alguno,
-    cantará ¡Agua!.
+    Si la posición indicada no corresponde a una parte de
+    barco alguno, cantará ¡Agua!.
 
-    Cada jugador referenciará en ese segundo tablero, 
-    de diferente manera y a su conveniencia, los disparos 
+    Cada jugador referenciará en ese segundo tablero,
+    de diferente manera y a su conveniencia, los disparos
     que han caído sobre una nave oponente y los que han caído al mar:
     en la implementación del juego con lápiz y papel,
     pueden señalarse con una cruz los tiros errados y
     con un círculo los acertados a una nave, o con cuadrados
     huecos y rellenos, como se ve en la imagen; 
-    en la versión con pizarras, se utilizan pines de un 
+    en la versión con pizarras, se utilizan pines de un
     color para los aciertos y de otro para las marras.
 
 
     Fin del juego:
     El juego puede terminar con un ganador o en empate.
 
-    hay ganador: quien descubra, quien destruya primero todas las naves de su oponente será el vencedor
-    (como en tantos otros juegos en los que se participa por turnos, en caso de que el participante que
-    comenzó la partida hunda en su última jugada el último barco de su oponente que quedaba a flote,
-    el otro participante tiene derecho a una última posibilidad para alcanzar el empate,
+    hay ganador: quien descubra, quien destruya primero
+    todas las naves de su oponente será el vencedor
+    (como en tantos otros juegos en los que se participa por turnos, 
+    en caso de que el participante que
+    comenzó la partida hunda en su última jugada el último barco
+    de su oponente que quedaba a flote,
+    el otro participante tiene derecho a una última posibilidad
+    para alcanzar el empate,
     a un último disparo que también le permita terminar de 
     hundir la flota contraria, lo que supondría un empate);
 
-    empate: si bien lo habitual es continuar el juego hasta que haya un ganador,
-    el empate también puede alcanzarse si, tras haber disparado cada jugador una
+    empate: si bien lo habitual es continuar el juego hasta que
+    haya un ganador,
+    el empate también puede alcanzarse si, tras haber
+    disparado cada jugador una
     misma cantidad de tiros fija y predeterminada
-    (como una variante permitida en el juego), ambos jugadores han acertado en
+    (como una variante permitida en el juego),
+    ambos jugadores han acertado en
     igual número de casillas contrarias.
 
-    Modos de Juego: 
-    1. Single Player: En el cual se llena el tablero automáticamente y el jugador
-                      debera destruir la flota.
+    Modos de Juego:
+    1. Single Player: En el cual se llena el tablero automáticamente 
+                      y el jugador debera destruir la flota.
 
     2. Multiplayer: En este modo deberas enfrentarte con un amigo."""
 
     raw_input("Presione enter para continuar... ")
-    pixer.stop()
+    PIXER.stop()
     os.system("reset")
     menu()
 
 
 def navy():
-    print """     BBBBBBB                AAAAA        TTTTTTTTTTTTTTTTTTTTTT         AAAAA            LLLL                 LLLL                        AAAAA                     
-                  BB     BB            AA     AA         TTTTTTTTTTTTTTTT          AA     AA          LLLL                 LLLL                      AA     AA
-                  BB       BB         AA       AA              TTTT               AA       AA         LLLL                 LLLL                     AA       AA 
-                  BB     BB          AA         AA             TTTT              AA         AA        LLLL                 LLLL                    AA         AA  
-                  BBBBBBB           AAAAAAAAAAAAAAA            TTTT             AAAAAAAAAAAAAAA       LLLL                 LLLL                   AAAAAAAAAAAAAAA
-                  BB     BB        AAAAAAAAAAAAAAAAA           TTTT            AAAAAAAAAAAAAAAAA      LLLL                 LLLL                  AAAAAAAAAAAAAAAAA
-                  BB       BB     AA               AA          TTTT           AA               AA     LLLL                 LLLL                 AA               AA
-                  BB     BB      AA                 AA         TTTT          AA                 AA    LLLLLLLLLLLLLLLL     LLLLLLLLLLLLLLLL    AA                 AA
-                  BBBBBBB       AA                   AA        TTTT         AA                   AA   LLLLLLLLLLLLLLLL     LLLLLLLLLLLLLLLL   AA                   AA
+    """ Funcion de Etiqueta """
+    print """                   ☠☠☠☠☠☠☠☠☠☠☠☠  Batalla Naval 6.0  ☠☠☠☠☠☠☠☠☠☠☠
 
+                                         # #  ( )
+                                      ___#_#___|__
+                                  _  |____________|  _ 
+                           _=====| | |            | | |==== _ 
+                     =====| |.---------------------------. | |====
+        <--------------------'   .  .  .  .  .  .  .  .   '-------------->
+         \                              POSEIDON                        /
+          \____________________________________________________________/
+        wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+    wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
+           wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
     """
     raw_input("Presione enter...")
+    os.system("reset")
 
 def play1():
     """se dirige al menu"""
-    #navy()
+    navy()
     batalla = _Player()
     batalla.menu_single()
-    os.system("clear")
+    os.system("reset")
     menu()
 
 def play1_2():
     """Inicia el Juego de Jugador 1 y jugador 2 """
-    naval = _Multi_Player()
+    navy()
+    naval = _Mplayer()
     naval.menu_multi()
     menu()
 
@@ -2212,7 +2235,7 @@ def salir():
     """Funcion Salir"""
     print "Saliendo ..."
     time.sleep(2)
-    os.system("cls")
+    os.system("reset")
     print " ☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠ "
     print " ☠☠☠☠                  Batalla Naval 6.0                  ☠☠☠☠ "
     print " ☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠☠ \n"
@@ -2226,9 +2249,8 @@ def salir():
 def menu():
     """Funcion menu Principal"""
     menu = {1:instrucciones, 2:play1, 3:play1_2, 4:salir}
-    validar = False
     opcion = 0
-    #epica.play(loops=4, maxtime=0, fade_ms=0)
+    EPICA.play(loops=4, maxtime=0, fade_ms=0)
     while True:
 
         print"                           ***** BattleShip Menú © ***** \n"
@@ -2245,18 +2267,19 @@ def menu():
             else:
                 print "Ingrese opción válida\n"
                 time.sleep(1)
-                os.system("clear")
+                os.system("reset")
         except(RuntimeError, TypeError, NameError, ValueError):
             print "Ingrese opción válida\n"
             time.sleep(1)
-            os.system("clear")
+            os.system("reset")
 
     if menu.has_key(opcion):
-        epica.stop()   
-        os.system("clear")
-        valor = menu[opcion]()
+        EPICA.stop()
+        os.system("reset")
+        menu[opcion]()
 
-    else:    
+    else:
         print 'No hay clave buscada'
     opcion = 0
+navy()
 menu()
